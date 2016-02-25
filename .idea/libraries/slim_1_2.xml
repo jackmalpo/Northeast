@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="slim-1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.metova/slim/1.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.metova/slim/1.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.metova/slim/1.2/8f9017d7f7fb440d91ec8c96b69603c236e3476b/slim-1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
