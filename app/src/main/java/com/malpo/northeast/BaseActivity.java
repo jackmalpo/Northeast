@@ -20,4 +20,11 @@ public class BaseActivity extends SlimActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(!(this instanceof MainActivity))
+            overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
+    }
 }

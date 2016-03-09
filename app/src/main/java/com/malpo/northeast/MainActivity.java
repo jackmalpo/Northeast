@@ -2,6 +2,7 @@ package com.malpo.northeast;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.malpo.northeast.models.DateModel;
+import com.malpo.northeast.models.Ticket;
 import com.metova.slim.annotation.Layout;
+
+import org.parceler.Parcels;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -76,6 +81,13 @@ public class MainActivity extends BaseActivity {
     private boolean toDateSet;
     private boolean fromDateSet;
 
+    private String fromLocation;
+    private String toLocation;
+
+    private int adultQuantityVal;
+    private int childQuantityVal;
+    private int seniorQuantityVal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,15 +96,24 @@ public class MainActivity extends BaseActivity {
         calendar = Calendar.getInstance();
         dateFormatSymbols = DateFormatSymbols.getInstance();
         fromYear = toYear = calendar.get(Calendar.YEAR);
-        fromMonth = toYear = calendar.get(Calendar.MONTH);
-        fromDay = toYear = calendar.get(Calendar.DAY_OF_MONTH);
+        fromMonth = toMonth = calendar.get(Calendar.MONTH);
+        fromDay = toDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         //Set default from / to date text;
         String fromDateDefaultText = dateFormatSymbols.getShortMonths()[fromMonth] + " " + fromDay;
         fromDateText.setText(fromDateDefaultText);
         toDateText.setText("?");
+
+        adultQuantityVal = 1;
+        adultQuantity.setText(String.valueOf(adultQuantityVal));
     }
 
+    private void startNextActivity(Ticket ticket){
+        Intent intent = new Intent(this, TicketListActivity.class);
+        intent.putExtra("ticket", Parcels.wrap(Ticket.class, ticket));
+        startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+    }
 
     /*
         GPS Click Listener
@@ -104,7 +125,8 @@ public class MainActivity extends BaseActivity {
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                fromText.setText("BNA");
+                fromLocation = "BNA";
+                fromText.setText(fromLocation);
                 toText.requestFocus();
             }
         });
@@ -125,6 +147,13 @@ public class MainActivity extends BaseActivity {
     public void onCheckClick(View v){
         if(!toDateSet){
             Snackbar.make(parent, "To date has not been set!", Snackbar.LENGTH_SHORT).show();
+        } else {
+            toLocation = toText.getText().toString();
+            DateModel fromDateModel = new DateModel(fromYear, fromMonth, fromDay);
+            DateModel toDateModel = new DateModel(toYear, toMonth, toDay);
+            Ticket myTicket = new Ticket(fromDateModel, toDateModel, fromLocation, toLocation,
+                    adultQuantityVal, childQuantityVal, seniorQuantityVal);
+            startNextActivity(myTicket);
         }
     }
 
@@ -218,39 +247,39 @@ public class MainActivity extends BaseActivity {
     //ADULT
     @OnClick(R.id.adult_up_btn)
     public void onAdultUpClick(View v){
-        int val = Integer.valueOf(adultQuantity.getText().toString()) + 1;
-        adultQuantity.setText(String.valueOf(val));
+        adultQuantityVal = Integer.valueOf(adultQuantity.getText().toString()) + 1;
+        adultQuantity.setText(String.valueOf(adultQuantityVal));
     }
 
     @OnClick(R.id.adult_down_btn)
     public void onAdultDownClick(View v){
-        int val = Integer.valueOf(adultQuantity.getText().toString()) - 1;
-        adultQuantity.setText(val >= 0 ? String.valueOf(val) : String.valueOf(0));
+        adultQuantityVal = Integer.valueOf(adultQuantity.getText().toString()) - 1;
+        adultQuantity.setText(adultQuantityVal >= 0 ? String.valueOf(adultQuantityVal) : String.valueOf(0));
     }
 
     //CHILD
     @OnClick(R.id.child_up_btn)
     public void onChildUpClick(View v){
-        int val = Integer.valueOf(childQuantity.getText().toString()) + 1;
-        childQuantity.setText(String.valueOf(val));
+        childQuantityVal = Integer.valueOf(childQuantity.getText().toString()) + 1;
+        childQuantity.setText(String.valueOf(childQuantityVal));
     }
 
     @OnClick(R.id.child_down_btn)
     public void onChildDownClick(View v){
-        int val = Integer.valueOf(childQuantity.getText().toString()) - 1;
-        childQuantity.setText(val >= 0 ? String.valueOf(val) : String.valueOf(0));
+        childQuantityVal = Integer.valueOf(childQuantity.getText().toString()) - 1;
+        childQuantity.setText(childQuantityVal >= 0 ? String.valueOf(childQuantityVal) : String.valueOf(0));
     }
 
     //SENIOR
     @OnClick(R.id.senior_up_btn)
     public void onSeniorUpClick(View v){
-        int val = Integer.valueOf(seniorQuantity.getText().toString()) + 1;
-        seniorQuantity.setText(String.valueOf(val));
+        seniorQuantityVal = Integer.valueOf(seniorQuantity.getText().toString()) + 1;
+        seniorQuantity.setText(String.valueOf(seniorQuantityVal));
     }
 
     @OnClick(R.id.senior_down_btn)
     public void onSeniorDownClick(View v){
-        int val = Integer.valueOf(seniorQuantity.getText().toString()) - 1;
-        seniorQuantity.setText(val >= 0 ? String.valueOf(val) : String.valueOf(0));
+        seniorQuantityVal = Integer.valueOf(seniorQuantity.getText().toString()) - 1;
+        seniorQuantity.setText(seniorQuantityVal >= 0 ? String.valueOf(seniorQuantityVal) : String.valueOf(0));
     }
 }
