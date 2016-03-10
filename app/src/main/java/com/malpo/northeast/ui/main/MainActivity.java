@@ -1,10 +1,9 @@
-package com.malpo.northeast;
+package com.malpo.northeast.ui.main;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -14,19 +13,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.malpo.northeast.R;
 import com.malpo.northeast.models.DateModel;
 import com.malpo.northeast.models.Ticket;
+import com.malpo.northeast.ui.BaseActivity;
+import com.malpo.northeast.ui.ticket.FromFlightActivity;
 import com.metova.slim.annotation.Layout;
 
 import org.parceler.Parcels;
 
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -109,7 +106,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startNextActivity(Ticket ticket){
-        Intent intent = new Intent(this, TicketListActivity.class);
+        Intent intent = new Intent(this, FromFlightActivity.class);
         intent.putExtra("ticket", Parcels.wrap(Ticket.class, ticket));
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
