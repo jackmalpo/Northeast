@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.ticket.FromFlightActivity">
+    tools:context=".ui.CheckOutActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,47 +25,173 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/departing_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="Departing"
-            android:layout_marginBottom="5dp"/>
-        <include
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            layout="@layout/from_flight"
-            android:layout_marginBottom="10dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-        <TextView
-            android:id="@+id/returning_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="Returning"
-            android:layout_marginBottom="5dp"/>
-        <include
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/departing_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="Departing"
+                android:layout_marginBottom="5dp"/>
+            <include
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                layout="@layout/from_flight"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/returning_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="Returning"
+                android:layout_marginBottom="5dp"/>
+            <include
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                layout="@layout/to_flight"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/totalPriceText"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="Total: "
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/payment_text"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="Payment Type:"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            layout="@layout/to_flight"
-            android:layout_marginBottom="10dp"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/totalPriceText"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="Total: "
-            android:layout_gravity="center_horizontal"/>
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/button_wrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/android_pay"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/google"
+                        app:elevation="4dp"
+                        app:backgroundTint="@color/colorPrimaryDark"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        android:clickable="true"
+                        android:onClick="onPaymentClick"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Android Pay"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/apple_pay"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/apple"
+                        app:elevation="4dp"
+                        app:backgroundTint="@color/colorPrimaryDark"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        android:clickable="true"
+                        android:onClick="onPaymentClick"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apple Pay"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/bitcoin"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/bitcoin"
+                        app:elevation="4dp"
+                        app:backgroundTint="@color/colorPrimaryDark"
+                        app:borderWidth="0dp"
+                        app:fabSize="normal"
+                        android:clickable="true"
+                        android:onClick="onPaymentClick"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bitcoin"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

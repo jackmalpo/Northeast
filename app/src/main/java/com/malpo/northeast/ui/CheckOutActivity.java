@@ -1,7 +1,11 @@
 package com.malpo.northeast.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.malpo.northeast.R;
@@ -70,6 +74,15 @@ public class CheckOutActivity extends BaseActivity{
     @Bind(R.id.totalPriceText)
     TextView totalPriceText;
 
+    @Bind(R.id.button_wrapper)
+    LinearLayout buttonWrapper;
+
+    @Bind(R.id.progress)
+    ProgressBar bar;
+
+    @Bind(R.id.payment_text)
+    TextView paymentText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +95,7 @@ public class CheckOutActivity extends BaseActivity{
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Checkout");
+            getSupportActionBar().setTitle("Order Summary");
         }
 
         setFlightTexts();
@@ -132,6 +145,21 @@ public class CheckOutActivity extends BaseActivity{
         totalPriceText.setText(totalPrice);
     }
 
+    public void onPaymentClick(View v){
+        buttonWrapper.setVisibility(View.GONE);
+        bar.setVisibility(View.VISIBLE);
+        paymentText.setText("Authenticating...");
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bar.setVisibility(View.GONE);
+                paymentText.setText("Checkout Complete!\n\nYou will receive an email confirmation for your purchase shortly.");
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            }
+        }, 5000);
+
+    }
 
 
 
