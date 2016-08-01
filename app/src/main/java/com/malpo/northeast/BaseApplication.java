@@ -17,5 +17,7 @@ public class BaseApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
         //Dev 2
+
+        //Rebase 1
     }
 }
