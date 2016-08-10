@@ -1,14 +1,14 @@
 package com.malpo.northeast.ui;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.view.View;
-
 import com.malpo.northeast.R;
 import com.malpo.northeast.ui.main.MainActivity;
 import com.metova.slim.Slim;
 import com.trello.rxlifecycle.ActivityEvent;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.ButterKnife;
 import rx.subjects.BehaviorSubject;
@@ -40,24 +40,31 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mLifecycleSubject.onNext(ActivityEvent.DESTROY);
+        //added this on develop
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mLifecycleSubject.onNext(ActivityEvent.PAUSE);
+        //added this on develop
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mLifecycleSubject.onNext(ActivityEvent.RESUME);
+        //added this on develop
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mLifecycleSubject.onNext(ActivityEvent.START);
+        //added this on develop
+
     }
 
     @Override
